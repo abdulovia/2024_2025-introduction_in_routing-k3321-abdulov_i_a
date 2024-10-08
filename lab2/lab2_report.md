@@ -9,3 +9,9 @@ Year: 2024/2025
 Group: K3321
 
 Author: Abdulov Ilia Alex
+
+Lab: Lab2
+
+Date of create: 29.09.2024
+
+Date of finished: 
