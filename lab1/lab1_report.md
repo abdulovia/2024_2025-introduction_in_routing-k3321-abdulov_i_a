@@ -28,7 +28,7 @@ Date finished:
 
 ## Основная часть лабораторной работы
 
-Напишем [clab yaml](assets/networklab.clab.yaml) и сделаем deploy.
+Напишем [clab yaml](networklab.clab.yaml) и сделаем deploy.
 
 При вызове *clab inspect* должны отображаться созданные контейнеры со статусом: running
 ![clab inspect](image-inspect.png)
