@@ -28,7 +28,7 @@ Date finished:
 
 ## Основная часть лабораторной работы
 
-Напишем [clab yaml](networklab.clab.yaml) и сделаем deploy.
+Напишем [clab yaml](assets/networklab.clab.yaml) и сделаем deploy.
 
 При вызове *clab inspect* должны отображаться созданные контейнеры со статусом: running
 ![clab inspect](image-inspect.png)
@@ -127,15 +127,15 @@ udhcpc -i vlan20
 ## Результаты
 
 PC1 и PC2 получают от dhcp сервера на роутере ip-адреса из своей подсети:
-![PC2 ip addr is 10.10.20.223](image-dhcp.png)
+![PC2 ip addr is 10.10.20.223](assets/image-dhcp.png)
 
-Компьютеры находятся в разных vlan и intervlan routing на роутере не настроен, поэтому попытки компьютеров PC1 и PC2 пинговать друг друга неуспешны: ![PC1 pings PC2 and R01](image-ping.png)
+Компьютеры находятся в разных vlan и intervlan routing на роутере не настроен, поэтому попытки компьютеров PC1 и PC2 пинговать друг друга неуспешны: ![PC1 pings PC2 and R01](assets/image-ping.png)
 
 С роутера ping будет доходить до компьютеров в vlan 10 и 20:
-![alt text](image-router.png)
+![alt text](assets/image-router.png)
 
 Схема связи классического предприятия:
 
-![main shceme](image-lab1-new.png)
+![main shceme](assets/image-lab1-new.png)
 
-![clab inspect](image-graph.png)
+![clab inspect](assets/image-graph.png)
