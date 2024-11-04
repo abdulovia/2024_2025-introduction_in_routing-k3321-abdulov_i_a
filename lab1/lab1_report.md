@@ -31,7 +31,7 @@ Date finished:
 Напишем [clab yaml](networklab.clab.yaml) и сделаем deploy.
 
 При вызове *clab inspect* должны отображаться созданные контейнеры со статусом: running
-![clab inspect](image-inspect.png)
+![clab inspect](assets/image-inspect.png)
 
 Настроим конфигурации на устройствах:
 
