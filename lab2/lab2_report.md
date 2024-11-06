@@ -95,7 +95,6 @@ set name=R01.FRT
 - PC
 
 ```sh
-ip route del default via 192.168.100.1 dev eth0
 udhcpc -i eth1
 ```
 
