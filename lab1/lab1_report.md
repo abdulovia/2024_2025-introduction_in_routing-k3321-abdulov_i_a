@@ -14,7 +14,7 @@ Lab: Lab1
 
 Date created: 29.09.2024
 
-Date finished: 
+Date finished: 06.11.2024 
 
 ## Prerequisites
 
@@ -113,7 +113,8 @@ add disabled=no interface=bridge_vlan20
 - PC1
 
 ```sh
-ip link add link eth1 name vlan10 type vlan id 10 up
+ip link add link eth1 name vlan10 type vlan id 10
+ip link set vlan10 up
 udhcpc -i vlan10
 ```
 
@@ -121,6 +122,7 @@ udhcpc -i vlan10
 
 ```sh
 ip link add link eth1 name vlan20 type vlan id 20 up
+ip link set vlan20 up
 udhcpc -i vlan20
 ```
 

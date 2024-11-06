@@ -14,7 +14,7 @@ Lab: Lab2
 
 Date created: 16.10.2024
 
-Date finished: 
+Date finished: 06.11.2024
 
 ## Prerequisites
 
