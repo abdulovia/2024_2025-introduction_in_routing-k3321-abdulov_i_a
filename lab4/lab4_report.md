@@ -30,11 +30,35 @@ Date of finished:
 
 ![drawio scheme](assets/scheme.PNG)
 
-Начнем настраивать конфигурацию каждого сетевого устройства для первой части лабораторной работы. Настроим iBGP RR Cluster.Настроим VRF, RD и RT на 3 роутерах, IP адреса в VRF.
-
 <!--
 ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.8'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.3'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.4'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.5'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.6'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.7'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.9'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.10'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.11';
 -->
+
+### Часть 1: iBGP RR и VRF
+
+Начнем настраивать [конфигурацию каждого сетевого устройства для первой части лабораторной работы](#конфигурация-часть-1). Настроим iBGP RR Cluster.Настроим VRF, RD и RT на 3 роутерах, IP адреса в VRF.
+
+Проверим связность маршрутизаторов, куда подключены клиентские офисы PC1, PC2, PC3:
+
+![SPB MPLS L3VPN](assets/spb-routes.png)
+
+![SVL MPLS L3VPN](assets/svl-routes.png)
+
+![SVL MPLS L3VPN](assets/ny-routes.png)
+
+### Часть 2: VPLS
+
+Начнем настраивать [конфигурацию каждого сетевого устройства для второй части лабораторной работы](#конфигурация-часть-2). Отвяжем от интерфейсов VRF на 3 роутерах, настроим VPLS на 3 роутерах, настроим IP адресацию на PC1,2,3 в одной сети.
+
+Проверим связность PC1,2,3:
+
+![PC1](assets/PC1.png)
+
+![PC2](assets/PC2.png)
+
+![PC3](assets/PC3.png)
+
+### Конфигурация Часть 1
 
 #### R01.NY:
 
@@ -70,9 +94,8 @@ add interface=ether4
 add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf1
 
 /routing bgp peer
-add address-families=vpnv4 name=peer1 remote-address=10.0.5.252 remote-as=\
-    65500 update-source=loopback
-    
+add address-families=vpnv4 name=peer1 remote-address=10.0.5.252 remote-as=65500 update-source=loopback
+
 /routing ospf network
 add area=backbone network=10.0.2.100/30
 add area=backbone network=10.0.5.100/30
@@ -96,7 +119,6 @@ add address=10.0.5.252/32 interface=loopback network=10.0.5.252
 add address=10.0.5.102/30 interface=ether3 network=10.0.5.100
 add address=10.0.9.101/30 interface=ether4 network=10.0.9.100
 add address=10.0.7.102/30 interface=ether5 network=10.0.7.100
-
 
 /ip dhcp-client
 add disabled=no interface=ether1
@@ -141,7 +163,6 @@ add address=10.0.6.252/32 interface=loopback network=10.0.6.252
 add address=10.0.6.102/30 interface=ether3 network=10.0.6.100
 add address=10.0.8.101/30 interface=ether4 network=10.0.8.100
 add address=10.0.9.102/30 interface=ether5 network=10.0.9.100
-
 
 /ip dhcp-client
 add disabled=no interface=ether1
@@ -299,4 +320,79 @@ add area=backbone network=10.0.4.100/30
 add area=backbone network=10.0.1.252/32
 ```
 
+### Конфигурация Часть 2
 
+#### R01.NY
+
+```mikrotik
+/ip route vrf
+remove [find routing-mark=vrf1]
+
+/interface vpls
+add name=vpls1 disabled=no remote-peer=10.0.1.252 vpls-id=250:250
+add name=vpls2 disabled=no remote-peer=10.0.3.252 vpls-id=250:250
+
+/interface bridge
+add name=bridge-vpls
+
+/interface bridge port
+add bridge=bridge-vpls interface=vpls1
+add bridge=bridge-vpls interface=vpls2
+add bridge=bridge-vpls interface=ether4
+```
+
+#### R01.SVL
+
+```mikrotik
+/ip route vrf
+remove [find routing-mark=vrf1]
+
+/interface vpls
+add name=vpls1 disabled=no remote-peer=10.0.1.252 vpls-id=250:250
+add name=vpls2 disabled=no remote-peer=10.0.2.252 vpls-id=250:250
+
+/interface bridge
+add name=bridge-vpls
+
+/interface bridge port
+add bridge=bridge-vpls interface=vpls1
+add bridge=bridge-vpls interface=vpls2
+add bridge=bridge-vpls interface=ether4
+```
+
+#### R01.SPB
+
+```mikrotik
+/ip route vrf
+remove [find routing-mark=vrf1]
+
+/interface vpls
+add name=vpls1 disabled=no remote-peer=10.0.2.252 vpls-id=250:250
+add name=vpls2 disabled=no remote-peer=10.0.3.252 vpls-id=250:250
+
+/interface bridge
+add name=bridge-vpls
+
+/interface bridge port
+add bridge=bridge-vpls interface=vpls1
+add bridge=bridge-vpls interface=vpls2
+add bridge=bridge-vpls interface=ether4
+```
+
+#### PC1
+
+```sh
+ip addr add 172.16.10.10/24 dev eth2
+```
+
+#### PC2
+
+```sh
+ip addr add 172.16.10.20/24 dev eth2
+```
+
+#### PC3
+
+```sh
+ip addr add 172.16.10.30/24 dev eth2
+```

@@ -55,6 +55,6 @@ topology:
     - endpoints: ["R01.LBN:eth3", "R01.HKI:eth3"]
     - endpoints: ["R01.SPB:eth2", "R01.HKI:eth2"]
     - endpoints: ["R01.LBN:eth2", "R01.SVL:eth2"]
-    - endpoints: ["PC2:eth2", "R01.NY:eth3"]
     - endpoints: ["PC1:eth2", "R01.SPB:eth3"]
+    - endpoints: ["PC2:eth2", "R01.NY:eth3"]
     - endpoints: ["PC3:eth2", "R01.SVL:eth3"]
