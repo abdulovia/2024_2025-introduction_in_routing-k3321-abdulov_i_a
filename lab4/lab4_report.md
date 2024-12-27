@@ -30,6 +30,8 @@ Date of finished:
 
 ![drawio scheme](assets/scheme.PNG)
 
+![drawio scheme](assets/lab4.jpg)
+
 <!--
 ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.8'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.3'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.4'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.5'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.6'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.7'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.9'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.10'; ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.11';
 -->
@@ -67,7 +69,7 @@ ssh-keygen -f '/root/.ssh/known_hosts' -R '192.168.20.8'; ssh-keygen -f '/root/.
 add name=loopback
 
 /routing bgp instance
-set default as=65500 router-id=10.0.2.252
+set default as=64500 router-id=10.0.2.252
 
 /routing ospf instance
 set [ find default=yes ] router-id=10.0.2.252
@@ -81,7 +83,7 @@ add address=10.0.5.101/30 interface=ether3 network=10.0.5.100
 add disabled=no interface=ether1
 
 /ip route vrf
-add export-route-targets=65500:100 import-route-targets=65500:100 interfaces=ether4 route-distinguisher=65500:100 routing-mark=vrf1
+add export-route-targets=64500:100 import-route-targets=64500:100 interfaces=ether4 route-distinguisher=64500:100 routing-mark=vrf_devops
 
 /mpls ldp
 set enabled=yes lsr-id=10.0.2.252 transport-address=10.0.2.252
@@ -91,10 +93,10 @@ add interface=ether3
 add interface=ether4
 
 /routing bgp instance vrf
-add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf1
+add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf_devops
 
 /routing bgp peer
-add address-families=vpnv4 name=peer1 remote-address=10.0.5.252 remote-as=65500 update-source=loopback
+add address-families=vpnv4 name=peer1 remote-address=10.0.5.252 remote-as=64500 update-source=loopback
 
 /routing ospf network
 add area=backbone network=10.0.2.100/30
@@ -109,7 +111,7 @@ add area=backbone network=10.0.2.252/32
 add name=loopback
 
 /routing bgp instance
-set default as=65500 router-id=10.0.5.252
+set default as=64500 router-id=10.0.5.252
 
 /routing ospf instance
 set [ find default=yes ] router-id=10.0.5.252
@@ -133,11 +135,11 @@ add interface=ether5
 
 /routing bgp peer
 add address-families=vpnv4 name=peer1 remote-address=10.0.2.252 \
-    remote-as=65500 update-source=loopback
+    remote-as=64500 update-source=loopback
 add address-families=vpnv4 name=peer2 remote-address=10.0.6.252 \
-    remote-as=65500 route-reflect=yes update-source=loopback
+    remote-as=64500 route-reflect=yes update-source=loopback
 add address-families=vpnv4 name=peer3 remote-address=10.0.4.252 \
-    remote-as=65500 route-reflect=yes update-source=loopback
+    remote-as=64500 route-reflect=yes update-source=loopback
     
 /routing ospf network
 add area=backbone network=10.0.5.100/30
@@ -153,7 +155,7 @@ add area=backbone network=10.0.5.252/32
 add name=loopback
 
 /routing bgp instance
-set default as=65500 router-id=10.0.6.252
+set default as=64500 router-id=10.0.6.252
 
 /routing ospf instance
 set [ find default=yes ] router-id=10.0.6.252
@@ -177,11 +179,11 @@ add interface=ether5
 
 /routing bgp peer
 add address-families=vpnv4 name=peer1 remote-address=10.0.3.252 \
-    remote-as=65500 update-source=loopback
+    remote-as=64500 update-source=loopback
 add address-families=vpnv4 name=peer2 remote-address=10.0.4.252 \
-    remote-as=65500 route-reflect=yes update-source=loopback
+    remote-as=64500 route-reflect=yes update-source=loopback
 add address-families=vpnv4 name=peer3 remote-address=10.0.5.252 \
-    remote-as=65500 route-reflect=yes update-source=loopback
+    remote-as=64500 route-reflect=yes update-source=loopback
     
 /routing ospf network
 add area=backbone network=10.0.6.100/30
@@ -197,7 +199,7 @@ add area=backbone network=10.0.6.252/32
 add name=loopback
 
 /routing bgp instance
-set default as=65500 router-id=10.0.3.252
+set default as=64500 router-id=10.0.3.252
 
 /routing ospf instance
 set [ find default=yes ] router-id=10.0.3.252
@@ -211,7 +213,7 @@ add address=10.0.6.101/30 interface=ether3 network=10.0.6.100
 add disabled=no interface=ether1
 
 /ip route vrf
-add export-route-targets=65500:100 import-route-targets=65500:100 interfaces=ether4 route-distinguisher=65500:100 routing-mark=vrf1
+add export-route-targets=64500:100 import-route-targets=64500:100 interfaces=ether4 route-distinguisher=64500:100 routing-mark=vrf_devops
 
 /mpls ldp
 set enabled=yes lsr-id=10.0.3.252 transport-address=10.0.3.252
@@ -221,11 +223,11 @@ add interface=ether3
 add interface=ether4
 
 /routing bgp instance vrf
-add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf1
+add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf_devops
 
 /routing bgp peer
 add address-families=vpnv4 name=peer1 remote-address=10.0.6.252 remote-as=\
-    65500 update-source=loopback
+    64500 update-source=loopback
     
 /routing ospf network
 add area=backbone network=10.0.3.100/30
@@ -240,7 +242,7 @@ add area=backbone network=10.0.3.252/32
 add name=loopback
 
 /routing bgp instance
-set default as=65500 router-id=10.0.4.252
+set default as=64500 router-id=10.0.4.252
 
 /routing ospf instance
 set [ find default=yes ] router-id=10.0.4.252
@@ -264,11 +266,11 @@ add interface=ether5
 
 /routing bgp peer
 add address-families=vpnv4 name=peer1 remote-address=10.0.1.252 \
-    remote-as=65500 update-source=loopback
+    remote-as=64500 update-source=loopback
 add address-families=vpnv4 name=peer2 remote-address=10.0.5.252 \
-    remote-as=65500 route-reflect=yes update-source=loopback
+    remote-as=64500 route-reflect=yes update-source=loopback
 add address-families=vpnv4 name=peer3 remote-address=10.0.6.252 \
-    remote-as=65500 route-reflect=yes update-source=loopback
+    remote-as=64500 route-reflect=yes update-source=loopback
     
 /routing ospf network
 add area=backbone network=10.0.4.100/30
@@ -284,7 +286,7 @@ add area=backbone network=10.0.4.252/32
 add name=loopback
 
 /routing bgp instance
-set default as=65500 router-id=10.0.1.252
+set default as=64500 router-id=10.0.1.252
 
 /routing ospf instance
 set [ find default=yes ] router-id=10.0.1.252
@@ -298,7 +300,7 @@ add address=10.0.4.101/30 interface=ether3 network=10.0.4.100
 add disabled=no interface=ether1
 
 /ip route vrf
-add export-route-targets=65500:100 import-route-targets=65500:100 interfaces=ether4 route-distinguisher=65500:100 routing-mark=vrf1
+add export-route-targets=64500:100 import-route-targets=64500:100 interfaces=ether4 route-distinguisher=64500:100 routing-mark=vrf_devops
 
 /mpls ldp
 set enabled=yes lsr-id=10.0.1.252 transport-address=10.0.1.252
@@ -308,11 +310,11 @@ add interface=ether3
 add interface=ether4
 
 /routing bgp instance vrf
-add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf1
+add redistribute-connected=yes redistribute-ospf=yes routing-mark=vrf_devops
 
 /routing bgp peer
 add address-families=vpnv4 name=peer1 remote-address=10.0.4.252 remote-as=\
-    65500 update-source=loopback
+    64500 update-source=loopback
     
 /routing ospf network
 add area=backbone network=10.0.1.100/30
@@ -326,7 +328,7 @@ add area=backbone network=10.0.1.252/32
 
 ```mikrotik
 /ip route vrf
-remove [find routing-mark=vrf1]
+remove [find routing-mark=vrf_devops]
 
 /interface vpls
 add name=vpls1 disabled=no remote-peer=10.0.1.252 vpls-id=250:250
@@ -345,7 +347,7 @@ add bridge=bridge-vpls interface=ether4
 
 ```mikrotik
 /ip route vrf
-remove [find routing-mark=vrf1]
+remove [find routing-mark=vrf_devops]
 
 /interface vpls
 add name=vpls1 disabled=no remote-peer=10.0.1.252 vpls-id=250:250
@@ -364,7 +366,7 @@ add bridge=bridge-vpls interface=ether4
 
 ```mikrotik
 /ip route vrf
-remove [find routing-mark=vrf1]
+remove [find routing-mark=vrf_devops]
 
 /interface vpls
 add name=vpls1 disabled=no remote-peer=10.0.2.252 vpls-id=250:250
